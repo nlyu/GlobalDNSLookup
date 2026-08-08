@@ -33,6 +33,20 @@ code {
   font-size: 0.9em;
 }
 
+.permanent-banner {
+  padding: 0.35rem 1rem;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-surface-soft);
+  color: var(--cp-text-muted);
+  font-family: Consolas, "Courier New", Courier, monospace;
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.permanent-banner a {
+  font-weight: 600;
+}
+
 .site-header {
   display: flex;
   align-items: center;
