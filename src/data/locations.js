@@ -1,0 +1,40 @@
+export const locations = [
+  { code: "US", name: "United States", flag: "🇺🇸", subnet: "73.162.0.0/24" },
+  { code: "CA", name: "Canada", flag: "🇨🇦", subnet: "99.224.0.0/24" },
+  { code: "BR", name: "Brazil", flag: "🇧🇷", subnet: "177.0.0.0/24" },
+  { code: "GB", name: "United Kingdom", flag: "🇬🇧", subnet: "86.128.0.0/24" },
+  { code: "DE", name: "Germany", flag: "🇩🇪", subnet: "84.128.0.0/24" },
+  { code: "FR", name: "France", flag: "🇫🇷", subnet: "90.0.0.0/24" },
+  { code: "NL", name: "Netherlands", flag: "🇳🇱", subnet: "82.168.0.0/24" },
+  {
+    code: "CN",
+    name: "China Mainland",
+    flag: "🇨🇳",
+    subnet: "1.0.1.0/24",
+    preferredResolver: "alidns"
+  },
+  {
+    code: "HK",
+    name: "Hong Kong",
+    flag: "🇭🇰",
+    subnet: "203.198.0.0/24",
+    preferredResolver: "google"
+  },
+  { code: "TW", name: "Taiwan", flag: "🇹🇼", subnet: "61.224.0.0/24" },
+  { code: "JP", name: "Japan", flag: "🇯🇵", subnet: "114.144.0.0/24" },
+  { code: "KR", name: "South Korea", flag: "🇰🇷", subnet: "121.128.0.0/24" },
+  { code: "SG", name: "Singapore", flag: "🇸🇬", subnet: "203.116.0.0/24" },
+  { code: "MY", name: "Malaysia", flag: "🇲🇾", subnet: "60.48.0.0/24" },
+  { code: "ID", name: "Indonesia", flag: "🇮🇩", subnet: "36.64.0.0/24" },
+  { code: "TH", name: "Thailand", flag: "🇹🇭", subnet: "58.8.0.0/24" },
+  { code: "VN", name: "Vietnam", flag: "🇻🇳", subnet: "14.160.0.0/24" },
+  { code: "PH", name: "Philippines", flag: "🇵🇭", subnet: "49.144.0.0/24" },
+  { code: "IN", name: "India", flag: "🇮🇳", subnet: "122.160.0.0/24" },
+  { code: "AE", name: "United Arab Emirates", flag: "🇦🇪", subnet: "86.96.0.0/24" },
+  { code: "AU", name: "Australia", flag: "🇦🇺", subnet: "101.160.0.0/24" },
+  { code: "NZ", name: "New Zealand", flag: "🇳🇿", subnet: "122.56.0.0/24" },
+  { code: "MX", name: "Mexico", flag: "🇲🇽", subnet: "189.128.0.0/24" },
+  { code: "ES", name: "Spain", flag: "🇪🇸", subnet: "80.24.0.0/24" },
+  { code: "IT", name: "Italy", flag: "🇮🇹", subnet: "79.0.0.0/24" },
+  { code: "ZA", name: "South Africa", flag: "🇿🇦", subnet: "41.0.0.0/24" }
+];

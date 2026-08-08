@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (() => {
+        const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+        const theme =
+          param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <script>
+      (() => {
+        const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+        const saved = localStorage.getItem("globalDnsTheme");
+        if (!param) {
+          document.documentElement.setAttribute("data-theme", saved || "light");
+        }
+      })();
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        --cp-bg: #f7f4ef;
+        --cp-bg-elevated: #fcfbf8;
+        --cp-surface: #ffffff;
+        --cp-surface-soft: #f5f5f5;
+        --cp-border: #dedede;
+        --cp-border-strong: #919191;
+        --cp-text: #242424;
+        --cp-text-muted: #5c5c5c;
+        --cp-text-soft: #6f6f6f;
+        --cp-accent: #b11f4b;
+        --cp-accent-hover: #9a1a41;
+        --cp-accent-soft: rgba(177, 31, 75, 0.08);
+        --cp-accent-fg: #ffffff;
+        --cp-success: #16a34a;
+        --cp-danger: #dc2626;
+        --cp-warning: #f59e0b;
+        --cp-link: #0078d4;
+        --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+        --cp-overlay: rgba(255, 255, 255, 0.8);
+        --cp-panel: rgba(255, 255, 255, 0.86);
+        --cp-panel-strong: rgba(255, 255, 255, 0.96);
+        --cp-sheen: rgba(255, 255, 255, 0.55);
+        --cp-highlight: rgba(177, 31, 75, 0.12);
+      }
+      html[data-theme="dark"] {
+        color-scheme: dark;
+        --cp-bg: #3d3b3a;
+        --cp-bg-elevated: #343231;
+        --cp-surface: #292929;
+        --cp-surface-soft: #2e2e2e;
+        --cp-border: #474747;
+        --cp-border-strong: #5f5f5f;
+        --cp-text: #dedede;
+        --cp-text-muted: #919191;
+        --cp-text-soft: #b0b0b0;
+        --cp-accent: #fd8ea1;
+        --cp-accent-hover: #fb7b91;
+        --cp-accent-soft: rgba(253, 142, 161, 0.14);
+        --cp-accent-fg: #1a1a1a;
+        --cp-success: #4ade80;
+        --cp-danger: #f87171;
+        --cp-warning: #fbbf24;
+        --cp-link: #4da6ff;
+        --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+        --cp-overlay: rgba(41, 41, 41, 0.88);
+        --cp-panel: rgba(41, 41, 41, 0.72);
+        --cp-panel-strong: rgba(41, 41, 41, 0.96);
+        --cp-sheen: rgba(255, 255, 255, 0.04);
+        --cp-highlight: rgba(253, 142, 161, 0.12);
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="Check A, AAAA and CNAME DNS records from representative networks around the world."
+    >
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://nlyu.github.io/GlobalDNSLookup/">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap"
+    >
+    <link rel="stylesheet" href="./src/css/styles.css">
+    <title>Global DNS Lookup - Check DNS Records From Different Countries</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Global DNS Lookup home">Global DNS Lookup</a>
+      <nav aria-label="Primary navigation">
+        <a href="./how-it-works.html">How it works</a>
+        <a href="./about.html">About</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch color theme">
+          <span aria-hidden="true">☀</span>
+        </button>
+      </nav>
+    </header>
+
+    <div class="page-grid">
+      <main>
+        <section class="lookup-hero" aria-labelledby="page-title">
+          <div class="lookup-copy">
+            <p class="eyebrow">DNS / ECS / DoH</p>
+            <h1 id="page-title">Global DNS Lookup</h1>
+            <p class="subtitle">
+              Compare A, AAAA and CNAME records using representative network prefixes around the
+              world.
+            </p>
+
+            <form id="lookup-form" class="lookup-form" novalidate>
+              <label for="domain-input">Domain or URL</label>
+              <div class="lookup-controls">
+                <input
+                  id="domain-input"
+                  name="domain"
+                  type="text"
+                  inputmode="url"
+                  autocomplete="url"
+                  spellcheck="false"
+                  placeholder="www.example.com"
+                  required
+                >
+                <button id="lookup-button" type="submit">Lookup</button>
+              </div>
+              <p id="input-help" class="input-help">
+                Try <button class="text-button" type="button" data-example="www.cloudflare.com">www.cloudflare.com</button>.
+              </p>
+              <p id="input-error" class="input-error" role="alert" hidden></p>
+            </form>
+          </div>
+
+          <div class="coverage-panel" aria-labelledby="coverage-title">
+            <div class="coverage-heading">
+              <div>
+                <p class="eyebrow">Lookup coverage</p>
+                <h2 id="coverage-title">26 representative regions</h2>
+              </div>
+              <span class="coverage-count">26</span>
+            </div>
+
+            <div
+              class="world-map"
+              role="img"
+              aria-label="World map showing supported DNS lookup regions"
+            >
+              <div class="world-map-land" aria-hidden="true"></div>
+              <svg class="world-map-overlay" viewBox="0 0 720 360" aria-hidden="true">
+                <g class="map-grid">
+                  <path d="M0 90H720M0 180H720M0 270H720M180 0V360M360 0V360M540 0V360"/>
+                </g>
+                <g class="map-markers">
+                  <circle cx="160" cy="104" r="5"><title>United States</title></circle>
+                  <circle cx="148" cy="68" r="5"><title>Canada</title></circle>
+                  <circle cx="258" cy="200" r="5"><title>Brazil</title></circle>
+                  <circle cx="156" cy="134" r="5"><title>Mexico</title></circle>
+                  <circle cx="356" cy="72" r="5"><title>United Kingdom</title></circle>
+                  <circle cx="380" cy="78" r="5"><title>Germany</title></circle>
+                  <circle cx="364" cy="88" r="5"><title>France</title></circle>
+                  <circle cx="370" cy="65" r="5"><title>Netherlands</title></circle>
+                  <circle cx="352" cy="100" r="5"><title>Spain</title></circle>
+                  <circle cx="384" cy="96" r="5"><title>Italy</title></circle>
+                  <circle cx="568" cy="110" r="5"><title>China Mainland</title></circle>
+                  <circle cx="580" cy="137" r="5"><title>Hong Kong</title></circle>
+                  <circle cx="602" cy="132" r="5"><title>Taiwan</title></circle>
+                  <circle cx="636" cy="108" r="5"><title>Japan</title></circle>
+                  <circle cx="616" cy="112" r="5"><title>South Korea</title></circle>
+                  <circle cx="568" cy="178" r="5"><title>Singapore</title></circle>
+                  <circle cx="564" cy="172" r="5"><title>Malaysia</title></circle>
+                  <circle cx="596" cy="184" r="5"><title>Indonesia</title></circle>
+                  <circle cx="562" cy="150" r="5"><title>Thailand</title></circle>
+                  <circle cx="576" cy="148" r="5"><title>Vietnam</title></circle>
+                  <circle cx="604" cy="154" r="5"><title>Philippines</title></circle>
+                  <circle cx="518" cy="138" r="5"><title>India</title></circle>
+                  <circle cx="468" cy="132" r="5"><title>United Arab Emirates</title></circle>
+                  <circle cx="628" cy="230" r="5"><title>Australia</title></circle>
+                  <circle cx="708" cy="262" r="5"><title>New Zealand</title></circle>
+                  <circle cx="408" cy="240" r="5"><title>South Africa</title></circle>
+                </g>
+              </svg>
+            </div>
+
+            <ul class="coverage-list" aria-label="Supported regions">
+              <li>🇺🇸 US</li>
+              <li>🇨🇦 CA</li>
+              <li>🇧🇷 BR</li>
+              <li>🇬🇧 UK</li>
+              <li>🇩🇪 DE</li>
+              <li>🇫🇷 FR</li>
+              <li>🇳🇱 NL</li>
+              <li>🇨🇳 CN</li>
+              <li>🇭🇰 HK</li>
+              <li>🇹🇼 TW</li>
+              <li>🇯🇵 JP</li>
+              <li>🇰🇷 KR</li>
+              <li>🇸🇬 SG</li>
+              <li>🇲🇾 MY</li>
+              <li>🇮🇩 ID</li>
+              <li>🇹🇭 TH</li>
+              <li>🇻🇳 VN</li>
+              <li>🇵🇭 PH</li>
+              <li>🇮🇳 IN</li>
+              <li>🇦🇪 AE</li>
+              <li>🇦🇺 AU</li>
+              <li>🇳🇿 NZ</li>
+              <li>🇲🇽 MX</li>
+              <li>🇪🇸 ES</li>
+              <li>🇮🇹 IT</li>
+              <li>🇿🇦 ZA</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="results-section" class="results-section" aria-labelledby="results-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Live results</p>
+              <h2 id="results-title">DNS results</h2>
+            </div>
+            <p id="lookup-summary" class="lookup-summary">Waiting for input</p>
+          </div>
+
+          <div class="table-shell">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Location</th>
+                  <th scope="col">CNAME</th>
+                  <th scope="col">A</th>
+                  <th scope="col">AAAA</th>
+                  <th scope="col">Resolver</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody id="results-body"></tbody>
+            </table>
+          </div>
+          <p id="live-status" class="sr-only" aria-live="polite"></p>
+          <p class="disclaimer">
+            Results use representative EDNS Client Subnets and public recursive resolvers.
+            Actual results may vary by ISP, resolver, network and location.
+          </p>
+        </section>
+
+      </main>
+    </div>
+
+    <footer>
+      <p>&copy; <span id="current-year"></span> Global DNS Lookup</p>
+      <nav aria-label="Footer navigation">
+        <a href="./privacy.html">Privacy</a>
+        <a href="./about.html">About</a>
+        <a href="./how-it-works.html">How it works</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+    </footer>
+
+    <script type="module" src="./src/js/app.js"></script>
+  </body>
+</html>
