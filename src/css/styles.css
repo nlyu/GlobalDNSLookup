@@ -500,6 +500,15 @@ footer {
   font-size: 0.75rem;
 }
 
+footer p {
+  margin: 0;
+}
+
+.permanent-address {
+  margin-top: 0.2rem;
+  color: var(--cp-text-muted);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
