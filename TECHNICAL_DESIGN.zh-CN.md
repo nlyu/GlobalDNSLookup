@@ -803,7 +803,6 @@ src/
     geo-prefixes.json
   pages/
     privacy.html
-    about.html
     contact.html
 tests/
   domain.test.js

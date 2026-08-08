@@ -9,10 +9,8 @@ await mkdir(output, { recursive: true });
 
 for (const file of [
   "index.html",
-  "about.html",
   "privacy.html",
-  "contact.html",
-  "how-it-works.html"
+  "contact.html"
 ]) {
   await cp(resolve(root, file), resolve(output, file));
 }
