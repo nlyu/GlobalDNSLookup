@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nlyu.github.io/GlobalDNSLookup/sitemap.xml
+Sitemap: https://globalnslookup.com/sitemap.xml
