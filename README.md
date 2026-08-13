@@ -1,6 +1,6 @@
 # Global DNS Lookup
 
-A static developer utility that compares A, AAAA and CNAME records using representative EDNS Client Subnets across 26 regions.
+A static developer utility that compares A, AAAA and CNAME records using representative EDNS Client Subnets across 30 regions.
 
 ## Features
 

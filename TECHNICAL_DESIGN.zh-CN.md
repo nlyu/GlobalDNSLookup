@@ -37,7 +37,7 @@ Global DNS Lookup 是一个面向开发者、SRE、网络工程师和 CDN 工程
 - 支持输入域名或 URL，并自动提取 hostname
 - 支持 A 和 AAAA 查询
 - 从 A、AAAA 响应中提取完整 CNAME 链
-- 支持 26 个代表性地区
+- 支持 30 个代表性地区
 - 每个地区独立显示 loading、success 和 error 状态
 - 显示每种记录实际使用的 resolver
 - 保存并显示 TTL
@@ -320,7 +320,7 @@ Google -> serverless proxy -> DNSPod -> 360
 
 ## 7. Resolver 熔断
 
-如果 Google 在中国大陆无法访问，不能让 26 个请求分别等待 3 秒后才 fallback。
+如果 Google 在中国大陆无法访问，不能让 30 个请求分别等待 3 秒后才 fallback。
 
 应用应维护短期 provider health：
 
@@ -362,7 +362,7 @@ AAAA
 - 正常情况：2 个请求
 - 两个请求都 fallback：4 个请求
 
-26 个地区正常约为 52 个请求。
+30 个地区正常约为 60 个请求。
 
 ## 9. 数据模型
 
@@ -561,6 +561,10 @@ V1 地区：
 - Germany
 - France
 - Netherlands
+- Norway
+- Poland
+- Sweden
+- Switzerland
 - China Mainland（AliDNS 优先，Google fallback）
 - Hong Kong（Google 优先，AliDNS fallback）
 - Taiwan
@@ -852,7 +856,7 @@ async function resolveRecord(hostname, type, subnet) {
 2. 实现域名 normalize 和 validation。
 3. 实现 Google resolver。
 4. 实现 DNS JSON parser 和内部数据模型。
-5. 加入 26 个地区配置。
+5. 加入 30 个地区配置。
 6. 实现并发队列、逐行 rendering 和 cache。
 7. 实现完整错误状态。
 8. 实现 provider health 和熔断。
@@ -867,7 +871,7 @@ async function resolveRecord(hostname, type, subnet) {
 
 只有全部满足后才能上线：
 
-- 26 个地区可查询
+- 30 个地区可查询
 - A、AAAA、CNAME 正确解析
 - TTL 不丢失
 - mixed resolver 正确显示

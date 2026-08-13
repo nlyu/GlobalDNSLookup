@@ -6,6 +6,10 @@ export const locations = [
   { code: "DE", name: "Germany", flag: "🇩🇪", subnet: "84.128.0.0/24" },
   { code: "FR", name: "France", flag: "🇫🇷", subnet: "90.0.0.0/24" },
   { code: "NL", name: "Netherlands", flag: "🇳🇱", subnet: "82.168.0.0/24" },
+  { code: "NO", name: "Norway", flag: "🇳🇴", subnet: "84.208.0.0/24" },
+  { code: "PL", name: "Poland", flag: "🇵🇱", subnet: "83.24.0.0/24" },
+  { code: "SE", name: "Sweden", flag: "🇸🇪", subnet: "81.224.0.0/24" },
+  { code: "CH", name: "Switzerland", flag: "🇨🇭", subnet: "62.203.0.0/24" },
   {
     code: "CN",
     name: "China Mainland",
