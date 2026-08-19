@@ -9,6 +9,7 @@ await mkdir(output, { recursive: true });
 
 for (const file of [
   "index.html",
+  "how-it-works.html",
   "privacy.html",
   "contact.html"
 ]) {

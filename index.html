@@ -103,6 +103,7 @@
     <header class="site-header">
       <a class="brand" href="./" aria-label="Global DNS Lookup home">Global DNS Lookup</a>
       <nav aria-label="Primary navigation">
+        <a href="./how-it-works.html">How it works</a>
         <a href="./contact.html">Contact</a>
         <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch color theme">
           <span aria-hidden="true">☀</span>
@@ -263,6 +264,111 @@
           </p>
         </section>
 
+        <section class="content" aria-labelledby="guide-title">
+          <p class="eyebrow">DNS lookup guide</p>
+          <h2 id="guide-title">Understand how your domain resolves around the world</h2>
+          <p>
+            A DNS answer can vary by country even when everyone asks for the same hostname. Content
+            delivery networks, traffic managers and geo-aware DNS services often return different
+            addresses so visitors reach a nearby or healthy endpoint. Global DNS Lookup compares
+            those answers through public DNS-over-HTTPS resolvers using representative EDNS Client
+            Subnet prefixes. It helps you spot regional differences without collecting your IP
+            address or requiring an account.
+          </p>
+
+          <div class="definition-grid">
+            <section>
+              <h3>A records</h3>
+              <p>
+                An A record maps a hostname to an IPv4 address. Different addresses across regions
+                can be expected when a CDN or global load balancer directs traffic geographically.
+              </p>
+            </section>
+            <section>
+              <h3>AAAA records</h3>
+              <p>
+                An AAAA record is the IPv6 equivalent of an A record. Missing AAAA answers may mean
+                the service is IPv4-only, while inconsistent answers can reveal an incomplete IPv6
+                rollout.
+              </p>
+            </section>
+            <section>
+              <h3>CNAME records</h3>
+              <p>
+                A CNAME points one hostname to another. The chain often identifies the CDN, hosting
+                platform or traffic-management service responsible for the final address.
+              </p>
+            </section>
+            <section>
+              <h3>TTL and resolver</h3>
+              <p>
+                TTL indicates how long a DNS response may be cached. The resolver label shows which
+                public provider returned the result, which is useful when comparing cached answers
+                during a DNS change.
+              </p>
+            </section>
+          </div>
+
+          <h2>How to investigate a regional DNS problem</h2>
+          <ol class="content-steps">
+            <li>Look up the exact hostname users visit, not only the root domain.</li>
+            <li>Compare CNAME chains first to see whether regions use different platforms.</li>
+            <li>Compare A and AAAA answers and note whether the difference affects one protocol.</li>
+            <li>Check TTL values before deciding that a recently changed record is still stale.</li>
+            <li>Confirm the result with the authoritative DNS provider and a real network when possible.</li>
+          </ol>
+          <p>
+            Regional differences are not automatically errors. They become suspicious when a
+            country receives an unexpected provider, an old address, no data, or repeated lookup
+            failures while other regions succeed.
+          </p>
+
+          <h2>What the results can and cannot prove</h2>
+          <p>
+            The configured prefixes represent networks in each listed country, but the lookup is
+            not executed by a physical probe inside every country. Public resolvers may honor,
+            shorten or ignore EDNS Client Subnet information, and an ISP resolver may have a
+            different cache. Use the comparison as a diagnostic signal rather than a guarantee of
+            what every user will receive.
+          </p>
+          <p>
+            For implementation details, provider behavior and responsible interpretation, read
+            <a href="./how-it-works.html">how the geographic DNS comparison works</a>.
+          </p>
+
+          <h2>Frequently asked questions</h2>
+          <div class="definition-grid">
+            <section>
+              <h3>Why do countries return different IP addresses?</h3>
+              <p>
+                Geo-aware DNS can direct users to nearby data centers, different CDN edges or
+                region-specific services. Different answers are often intentional.
+              </p>
+            </section>
+            <section>
+              <h3>Why is an AAAA result empty?</h3>
+              <p>
+                The hostname may not support IPv6, or the selected DNS path may not publish an IPv6
+                endpoint. An empty result is different from a failed request.
+              </p>
+            </section>
+            <section>
+              <h3>Does this test website availability?</h3>
+              <p>
+                No. It compares DNS records only. An address can resolve correctly while the web
+                server, certificate, firewall or application remains unavailable.
+              </p>
+            </section>
+            <section>
+              <h3>Does the tool use my location?</h3>
+              <p>
+                No. Geographic comparisons use configured representative prefixes rather than your
+                personal IP address. Queries are sent directly to the listed public DNS providers.
+              </p>
+            </section>
+          </div>
+        </section>
+
       </main>
     </div>
 
@@ -275,6 +381,7 @@
         </p>
       </div>
       <nav aria-label="Footer navigation">
+        <a href="./how-it-works.html">How it works</a>
         <a href="./privacy.html">Privacy</a>
         <a href="./contact.html">Contact</a>
       </nav>

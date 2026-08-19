@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (() => {
+        const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+        const theme =
+          param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <style>
+      :root { color-scheme: light; --cp-bg: #f7f4ef; --cp-bg-elevated: #fcfbf8; --cp-surface: #ffffff; --cp-surface-soft: #f5f5f5; --cp-border: #dedede; --cp-border-strong: #919191; --cp-text: #242424; --cp-text-muted: #5c5c5c; --cp-text-soft: #6f6f6f; --cp-accent: #b11f4b; --cp-accent-hover: #9a1a41; --cp-accent-soft: rgba(177, 31, 75, 0.08); --cp-accent-fg: #ffffff; --cp-success: #16a34a; --cp-danger: #dc2626; --cp-warning: #f59e0b; --cp-link: #0078d4; --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12); --cp-overlay: rgba(255, 255, 255, 0.8); --cp-panel: rgba(255, 255, 255, 0.86); --cp-panel-strong: rgba(255, 255, 255, 0.96); --cp-sheen: rgba(255, 255, 255, 0.55); --cp-highlight: rgba(177, 31, 75, 0.12); }
+      html[data-theme="dark"] { color-scheme: dark; --cp-bg: #3d3b3a; --cp-bg-elevated: #343231; --cp-surface: #292929; --cp-surface-soft: #2e2e2e; --cp-border: #474747; --cp-border-strong: #5f5f5f; --cp-text: #dedede; --cp-text-muted: #919191; --cp-text-soft: #b0b0b0; --cp-accent: #fd8ea1; --cp-accent-hover: #fb7b91; --cp-accent-soft: rgba(253, 142, 161, 0.14); --cp-accent-fg: #1a1a1a; --cp-success: #4ade80; --cp-danger: #f87171; --cp-warning: #fbbf24; --cp-link: #4da6ff; --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32); --cp-overlay: rgba(41, 41, 41, 0.88); --cp-panel: rgba(41, 41, 41, 0.72); --cp-panel-strong: rgba(41, 41, 41, 0.96); --cp-sheen: rgba(255, 255, 255, 0.04); --cp-highlight: rgba(253, 142, 161, 0.12); }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="Learn how Global DNS Lookup compares regional A, AAAA and CNAME answers using DNS-over-HTTPS and EDNS Client Subnet."
+    >
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://globalnslookup.com/how-it-works.html">
+    <link rel="stylesheet" href="./src/css/styles.css">
+    <title>How Geographic DNS Comparison Works - Global DNS Lookup</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./">Global DNS Lookup</a>
+      <nav aria-label="Primary navigation">
+        <a href="./">DNS lookup</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+    </header>
+    <main class="static-page">
+      <p class="eyebrow">Methodology</p>
+      <h1>How geographic DNS comparison works</h1>
+      <p>
+        Global DNS Lookup is designed to answer a focused diagnostic question: could the same
+        hostname resolve differently when a DNS provider considers users from different countries?
+        The tool compares A, AAAA and CNAME responses for a set of representative network prefixes.
+        It does not claim to reproduce every ISP, device or resolver cache inside a country.
+      </p>
+
+      <h2>DNS-over-HTTPS queries</h2>
+      <p>
+        The browser sends DNS-over-HTTPS requests to supported public resolvers. DNS-over-HTTPS
+        carries a normal DNS question through HTTPS, allowing the application to request structured
+        DNS data without operating its own recursive DNS server. The response is parsed into CNAME,
+        IPv4 and IPv6 records and includes available TTL values.
+      </p>
+      <p>
+        Google Public DNS is normally queried first. AliDNS is preferred for the China Mainland
+        comparison, and either provider may be used as a fallback after a network or provider
+        failure. Each result identifies the resolver that supplied it so a fallback is not mistaken
+        for an answer from the preferred provider.
+      </p>
+
+      <h2>Representative EDNS Client Subnet prefixes</h2>
+      <p>
+        Some authoritative DNS and CDN systems use EDNS Client Subnet, commonly abbreviated ECS, to
+        tailor an answer for part of a user's network. For each listed location, the tool supplies a
+        configured public network prefix associated with that country. The prefix is a diagnostic
+        hint; it is not your IP address and does not identify a specific visitor.
+      </p>
+      <p>
+        Resolver and authoritative-server behavior varies. A resolver can reduce the prefix length,
+        ignore ECS, answer from cache or apply its own privacy policy. Consequently, identical
+        answers across all rows do not prove that every network receives the same result, and
+        different answers do not by themselves prove a fault.
+      </p>
+
+      <h2>How records are interpreted</h2>
+      <ul>
+        <li><strong>CNAME:</strong> shows aliases followed before reaching address records.</li>
+        <li><strong>A:</strong> lists IPv4 endpoints returned for the requested hostname.</li>
+        <li><strong>AAAA:</strong> lists IPv6 endpoints, when the hostname publishes them.</li>
+        <li><strong>TTL:</strong> reports the cache lifetime supplied with each parsed record.</li>
+        <li><strong>Status:</strong> distinguishes success, partial data, NXDOMAIN and provider failure.</li>
+      </ul>
+      <p>
+        A missing record type is not always an error. Many valid services publish A records without
+        AAAA records. NXDOMAIN means the DNS response says the name does not exist, while a failed
+        request indicates that the tool could not obtain a usable response from its providers.
+      </p>
+
+      <h2>Common reasons for regional differences</h2>
+      <p>
+        CDNs commonly return nearby edge addresses to reduce latency. Global traffic managers may
+        direct users away from an unhealthy region, separate regulated environments, or stage a
+        rollout country by country. Differences can also persist temporarily because recursive
+        resolvers cache records until their TTL expires.
+      </p>
+      <p>
+        When investigating a change, compare the CNAME chain and address records separately. A new
+        CNAME can indicate that traffic moved to another platform, while an unchanged CNAME with new
+        addresses may simply reflect normal CDN routing. Check both IPv4 and IPv6 because the two
+        paths can be configured independently.
+      </p>
+
+      <h2>Limitations and responsible use</h2>
+      <p>
+        This is a DNS comparison, not an uptime, latency, HTTP, TLS or security test. It does not
+        connect to the returned addresses and cannot verify whether a website works from a country.
+        Corporate split-horizon DNS, private zones and names that only resolve inside a private
+        network are outside the intended use of this public tool.
+      </p>
+      <p>
+        Avoid entering confidential internal hostnames. For a production incident, confirm important
+        findings with the authoritative DNS configuration, the affected ISP or a trusted physical
+        probe in the region. The comparison is most useful for identifying where to investigate
+        next, not as the only source of truth.
+      </p>
+
+      <p><a href="./">Run a global DNS lookup</a></p>
+    </main>
+    <footer>
+      <a href="./">Home</a>
+      <nav aria-label="Footer navigation">
+        <a href="./privacy.html">Privacy</a>
+        <a href="./contact.html">Contact</a>
+      </nav>
+    </footer>
+  </body>
+</html>

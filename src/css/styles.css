@@ -470,6 +470,16 @@ tbody tr:last-child td {
   color: var(--cp-text-muted);
 }
 
+.content-steps {
+  max-width: 50rem;
+  padding-left: 1.4rem;
+  color: var(--cp-text-muted);
+}
+
+.content-steps li + li {
+  margin-top: 0.45rem;
+}
+
 .definition-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -497,6 +507,10 @@ tbody tr:last-child td {
 }
 
 .static-page p {
+  color: var(--cp-text-muted);
+}
+
+.static-page li {
   color: var(--cp-text-muted);
 }
 
